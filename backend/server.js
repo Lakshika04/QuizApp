@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import connectDb from './src/config/db.js';
 import userRouter from './src/routes/userRoutes.js';
+import resultRouter from './src/routes/resultRoutes.js';
 
 
 
@@ -20,6 +21,9 @@ connectDb();
 //routes
 
 app.use('/api/auth', userRouter);
+app.use('/api/results',resultRouter);
+
+
 
 app.get('/',(req,res)=>{
     res.send('api working')
