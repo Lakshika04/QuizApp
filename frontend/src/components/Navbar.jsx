@@ -153,7 +153,7 @@
 
 // export default Navbar
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { navbarStyles } from '../assets/dummystyle'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { Award, LogIn, LogOut, Menu, X } from 'lucide-react';
@@ -164,7 +164,26 @@ const navigate= useNavigate();
 const[loggedIn, setLoggedIn]= useState(false);
 const[menuOpen,setMenuOpen]=useState(false);
 
-//LOgin funtion
+//useEffect hook to show the login state change
+
+  useEffect(() => {
+    try {
+      const u = localStorage.getItem("authToken");
+      setLoggedIn(!!u);
+    } catch (e) {
+      setLoggedIn(false);
+    }
+
+    const handler = (ev) => {
+      const detailUser = ev?.detail?.user ?? null;
+      setLoggedIn(!!detailUser);
+    };
+    window.addEventListener("authChanged", handler);
+
+    return () => window.removeEventListener("authChanged", handler);
+  }, []);
+
+//LOgout funtion
 const handleLogout=()=>{
   try {
     localStorage.removeItem('authToken')
