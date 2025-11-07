@@ -45,7 +45,6 @@ const Login = ({ onLoginSuccess = null }) => {
       if (!resp.ok) {
         const msg = data?.message || 'login failed';
         setSubmitError(msg);
-        setLoading(false);
         return;
       }
 
